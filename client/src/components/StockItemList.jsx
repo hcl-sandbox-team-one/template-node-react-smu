@@ -66,36 +66,41 @@ constructor(props) {
   onRowClick = id => {
     this.setState({ selectedRow: id });
   };
-renderRow = (row, id) => {
+render() {
+    const data = this.state.data;
     return (
-      <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
-        <div>
-          <StructuredListInput
-            id={`row-${id}`}
-            value="row-0"
-            title="row-0"
-            name="row-0"
-            //defaultChecked={this.state.selectedRow === id}
-            checked={this.state.selectedRow === id}
-          />
-          <StructuredListCell>
-            <Icon
-              className="bx--structured-list-svg"
-              icon={iconCheckmarkSolid}
-            />
-          </StructuredListCell>
+      <div className="bx--grid pattern-container">
+        <Header
+          title={this.title}
+          subtitle={this.subtitle}
+        />
+        <div className="bx--row">
+          <div className="bx--col-xs-12">
+            <StructuredListWrapper selection border>
+              <StructuredListHead>
+                <StructuredListRow head>
+                  <StructuredListCell head />
+                  {this.columns.map(key => {
+                    return (
+                      <StructuredListCell head key={key}>
+                        {key.charAt(0).toUpperCase() +
+                          key.slice(1).replace(/([A-Z])/g, " $1")}
+                      </StructuredListCell>
+                    );
+                  })}
+                </StructuredListRow>
+              </StructuredListHead>
+              <StructuredListBody>
+                {data.map((row, i) => {
+                  return this.renderRow(row, i);
+                })}
+              </StructuredListBody>
+            </StructuredListWrapper>
+          </div>
         </div>
-        {this.columns.map(col => {
-          const format = this.formatters[col] || function(val) { return val; };
-          return (
-            <StructuredListCell key={col} className="simple-list-row">
-              {format(row[col])}
-            </StructuredListCell>
-          );
-        })}
-      </StructuredListRow>
+      </div>
     );
-  };
+  }
 }
 
 export default StockItemList;
