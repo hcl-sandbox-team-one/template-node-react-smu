@@ -66,7 +66,36 @@ constructor(props) {
   onRowClick = id => {
     this.setState({ selectedRow: id });
   };
-
+renderRow = (row, id) => {
+    return (
+      <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
+        <div>
+          <StructuredListInput
+            id={`row-${id}`}
+            value="row-0"
+            title="row-0"
+            name="row-0"
+            //defaultChecked={this.state.selectedRow === id}
+            checked={this.state.selectedRow === id}
+          />
+          <StructuredListCell>
+            <Icon
+              className="bx--structured-list-svg"
+              icon={iconCheckmarkSolid}
+            />
+          </StructuredListCell>
+        </div>
+        {this.columns.map(col => {
+          const format = this.formatters[col] || function(val) { return val; };
+          return (
+            <StructuredListCell key={col} className="simple-list-row">
+              {format(row[col])}
+            </StructuredListCell>
+          );
+        })}
+      </StructuredListRow>
+    );
+  };
 }
 
 export default StockItemList;
