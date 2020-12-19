@@ -51,6 +51,22 @@ class StockItemList extends Component {
             "manufacturer": "Sony",
           }
         ];
+constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      selectedRow: 0,
+    };
+  }
+  async componentDidMount() {
+    this.setState({
+      data: await this.props.stockService.listStockItems()
+    });
+  }
+  onRowClick = id => {
+    this.setState({ selectedRow: id });
+  };
+
 }
 
 export default StockItemList;
