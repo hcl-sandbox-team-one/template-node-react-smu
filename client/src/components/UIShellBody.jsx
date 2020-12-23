@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import StockItemList from "./StockItemList";
 import DisplayForm from "../pattern-components/DisplayForm";
 import ValidatingForm from "../pattern-components/ValidatingForm";
 import UpdateForm from "../pattern-components/UpdateForm";
